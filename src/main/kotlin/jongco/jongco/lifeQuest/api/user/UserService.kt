@@ -17,8 +17,6 @@ class UserService (
 ){
     @Transactional
     fun login(username: String, password: String): TokenInfo {
-        // TODO : Delete print after tested
-        println("Login Function Executed")
         val authenticationToken = UsernamePasswordAuthenticationToken(username, password)
         println(authenticationToken.name)
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
