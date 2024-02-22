@@ -27,7 +27,7 @@ class SecurityConfig (
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
             httpBasic { disable() }
-            csrf { disable() }
+            csrf { disable() } // TODO : 이게 뭔지 정확히 알아보기
             sessionManagement {
                 sessionCreationPolicy = SessionCreationPolicy.STATELESS
             }
