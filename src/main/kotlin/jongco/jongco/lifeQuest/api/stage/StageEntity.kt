@@ -5,7 +5,7 @@ import jongco.jongco.lifeQuest.api.quest.QuestEntity
 import org.hibernate.annotations.UuidGenerator
 import java.util.*
 
-@Entity
+@Entity(name = "stage")
 @Table(name = "stage")
 class StageEntity (
     @Id

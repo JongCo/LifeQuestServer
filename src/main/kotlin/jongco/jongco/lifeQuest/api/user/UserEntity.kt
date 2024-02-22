@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.util.UUID
 import java.util.stream.Collectors
 
-@Entity
+@Entity(name = "user")
 @Table(name = "user")
 class UserEntity (
     @Id
