@@ -6,6 +6,7 @@ import jongco.jongco.lifeQuest.security.jwt.TokenInfo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,7 +16,7 @@ class UserService (
     @Autowired val authenticationManagerBuilder: AuthenticationManagerBuilder,
     @Autowired val jwtTokenProvider: JwtTokenProvider
 ){
-    @Transactional
+
     fun login(username: String, password: String): TokenInfo {
         val authenticationToken = UsernamePasswordAuthenticationToken(username, password)
         println(authenticationToken.name)
@@ -28,7 +29,7 @@ class UserService (
     fun register(username: String, password: String): UserRegisterResponseDto {
             val createdUser = UserEntity(
                 userName = username,
-                passWord = password
+                passWord = BCryptPasswordEncoder().encode(password)
             )
             userRepository.save(createdUser)
             return UserRegisterResponseDto("$username has been successfully created")

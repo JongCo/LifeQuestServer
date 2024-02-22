@@ -20,7 +20,7 @@ class CustomUserDetailsService(
     fun createUserDetails(user: UserEntity): UserDetails {
         return User.builder()
             .username(user.username)
-            .password(passwordEncoder.encode(user.password)) // TODO : 회원가입 시에 암호화한 비밀번호 내용을 encoding하여 비교할 것
+            .password(user.password)
             .roles( *user.roles.toTypedArray() )
             .build()
     }
