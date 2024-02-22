@@ -38,3 +38,7 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Spring Properties ###
+/src/main/resources/application.properties
+/src/main/resources/db/initialize.sql
