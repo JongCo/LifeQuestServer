@@ -1,13 +1,10 @@
 package jongco.jongco.lifeQuest.api.quest
 
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import jongco.jongco.lifeQuest.api.stage.StageEntity
+import jongco.jongco.lifeQuest.api.user.UserEntity
 import org.hibernate.annotations.UuidGenerator
+import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Date
 import java.util.UUID
 
@@ -18,15 +15,22 @@ class QuestEntity (
     @UuidGenerator
     val id:UUID = UUID.randomUUID(),
 
+    @ManyToOne(targetEntity = UserEntity::class)
+    val owner: UserEntity,
+
     @Column(length = 200)
     var title:String,
 
     @OneToMany(mappedBy = "quest", cascade = [CascadeType.REMOVE])
-    val stages: List<StageEntity>,
+    val stages: List<StageEntity> = ArrayList(),
 
     @Column(nullable = true)
-    var startDateTime: Date,
+    var startDateTime: Date?,
 
     @Column(nullable = true)
-    var endDateTime: Date,
+    var endDateTime: Date?,
 )
+
+interface QuestRepository: JpaRepository<QuestEntity, UUID> {
+    fun findAllByOwnerId(owner: UUID): List<QuestEntity>
+}
