@@ -29,7 +29,8 @@ class UserService (
     fun register(username: String, password: String): UserRegisterResponseDto {
             val createdUser = UserEntity(
                 userName = username,
-                passWord = BCryptPasswordEncoder().encode(password)
+                passWord = BCryptPasswordEncoder().encode(password),
+                roles = List<String>(1){"USER"}
             )
             userRepository.save(createdUser)
             return UserRegisterResponseDto("$username has been successfully created")
