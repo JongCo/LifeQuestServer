@@ -21,5 +21,5 @@ class StageEntity (
 )
 
 interface StageRepository: JpaRepository<StageEntity, UUID>{
-    fun findAllByQuest(quest: UUID): List<StageEntity>
+    fun findAllByQuestId(quest: UUID): List<StageEntity>
 }
