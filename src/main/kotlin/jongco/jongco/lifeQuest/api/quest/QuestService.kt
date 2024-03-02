@@ -36,4 +36,13 @@ class QuestService (
         questRepository.save(createdQuest)
         return QuestDto(createdQuest.id.toString(), createdQuest.owner.id.toString(), createdQuest.title)
     }
+
+    fun getQuestById(id: UUID): QuestDto {
+        val selectedQuest = questRepository.findById(id)
+        return QuestDto(
+            selectedQuest.get().id.toString(),
+            selectedQuest.get().owner.id.toString(),
+            selectedQuest.get().title
+        )
+    }
 }
