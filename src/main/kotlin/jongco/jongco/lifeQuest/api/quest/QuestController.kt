@@ -1,22 +1,33 @@
 package jongco.jongco.lifeQuest.api.quest
 
+import jakarta.servlet.http.HttpServletRequest
+import jongco.jongco.lifeQuest.api.user.UserEntity
+import jongco.jongco.lifeQuest.security.jwt.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.SessionAttribute
+import java.security.Principal
 import java.util.*
 
 @RestController
 @RequestMapping("/quest")
 class QuestController (
-    @Autowired val questService: QuestService
+    @Autowired val questService: QuestService,
+    @Autowired val jwtTokenProvider: JwtTokenProvider
 ) {
     @GetMapping("/get")
-    fun getQuestsByOwner(@RequestBody getQuestsByUuidRequestDto: GetQuestsByUuidRequestDto): QuestsDto {
-        return questService.getQuestsByOwner(getQuestsByUuidRequestDto.uuid)
+    fun getQuestsByOwner(
+        authentication: Authentication,
+    ): QuestsDto {
+        val requestUserId: String? = (authentication.details as MutableMap<String, String>)["id"]
+        return questService.getQuestsByOwner(UUID.fromString(requestUserId))
     }
 
     @PostMapping("/create")
