@@ -21,6 +21,7 @@ import java.lang.RuntimeException
 import java.security.Key
 import java.util.Arrays
 import java.util.Date
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 import java.util.stream.Collectors
 import kotlin.reflect.typeOf
@@ -80,13 +81,16 @@ class JwtTokenProvider(@Value("\${jwt.secret}") secretKey: String) {
 
 
         val principal: UserDetails = User(claims.subject, "", authorities)
-        return UsernamePasswordAuthenticationToken(principal, "", authorities)
+        val authenticationToken = UsernamePasswordAuthenticationToken(principal, "", authorities)
+        val details: MutableMap<String, String> = mutableMapOf()
+        details["id"] = claims["id"].toString()
+        authenticationToken.details = details
+        return authenticationToken
     }
 
     fun validateToken(token: String): Boolean {
         try {
             val parsedClaims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
-            println("get Id by login credential : ${parsedClaims.body["id"]}")
             return true
         } catch (e: Exception) {
             println(e)
