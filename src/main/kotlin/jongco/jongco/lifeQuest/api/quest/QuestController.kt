@@ -18,6 +18,7 @@ class QuestController (
     fun getQuestsByOwner(@RequestBody getQuestsByUuidRequestDto: GetQuestsByUuidRequestDto): QuestsDto {
         return questService.getQuestsByOwner(getQuestsByUuidRequestDto.uuid)
     }
+
     @PostMapping("/create")
     fun createQuest(@RequestBody createQuestRequestDto: CreateQuestRequestDto): QuestDto {
         return questService.createQuest(

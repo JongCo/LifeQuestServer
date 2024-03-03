@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
+import jongco.jongco.lifeQuest.api.user.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.PropertySource
@@ -22,6 +23,7 @@ import java.util.Arrays
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import java.util.stream.Collectors
+import kotlin.reflect.typeOf
 
 @Component
 class JwtTokenProvider(@Value("\${jwt.secret}") secretKey: String) {
@@ -38,12 +40,16 @@ class JwtTokenProvider(@Value("\${jwt.secret}") secretKey: String) {
             .map { it.authority }
             .collect(Collectors.joining(","))
 
+        val loggedInUserEntity = authentication.principal as UserEntity
+
+
         val now = Date()
         val accessTokenExpiresIn = Date(now.time + TimeUnit.DAYS.toMillis(10))
         val refreshTokenExpiresIn = Date(now.time + TimeUnit.DAYS.toMillis(10))
 
         val accessToken = Jwts.builder()
             .setSubject(authentication.name)
+            .claim("id", loggedInUserEntity.id)
             .claim("auth", authorities)
             .setExpiration(accessTokenExpiresIn)
             .signWith(key, SignatureAlgorithm.HS256)
@@ -72,13 +78,15 @@ class JwtTokenProvider(@Value("\${jwt.secret}") secretKey: String) {
             .split((","))
             .map { SimpleGrantedAuthority(it) }
 
+
         val principal: UserDetails = User(claims.subject, "", authorities)
         return UsernamePasswordAuthenticationToken(principal, "", authorities)
     }
 
     fun validateToken(token: String): Boolean {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
+            val parsedClaims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
+            println("get Id by login credential : ${parsedClaims.body["id"]}")
             return true
         } catch (e: Exception) {
             println(e)

@@ -43,6 +43,10 @@ class UserEntity (
         return userName
     }
 
+    fun getId(): String {
+        return id.toString()
+    }
+
     // TODO : 이 밑으로 의미 파악 잘 해서 수정하기
     override fun isAccountNonExpired(): Boolean {
         return true

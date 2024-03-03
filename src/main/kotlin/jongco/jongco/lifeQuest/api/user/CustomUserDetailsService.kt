@@ -13,8 +13,8 @@ class CustomUserDetailsService(
     @Autowired val userRepository: UserRepository,
     @Autowired val passwordEncoder: BCryptPasswordEncoder
 ): UserDetailsService {
-    override fun loadUserByUsername(username: String): UserDetails {
-        return createUserDetails(userRepository.findByUserName(username))
+    override fun loadUserByUsername(username: String): UserEntity {
+        return userRepository.findByUserName(username)
     }
 
     fun createUserDetails(user: UserEntity): UserDetails {
