@@ -23,18 +23,18 @@ class UserController (
 
     @PostMapping("/login")
     fun login(@RequestBody userLoginRequestDto: UserLoginRequestDto): TokenInfo {
-        val userName = userLoginRequestDto.userName
-        val passWord = userLoginRequestDto.passWord
+        val username = userLoginRequestDto.username
+        val password = userLoginRequestDto.password
 
-        return userService.login(userName, passWord)
+        return userService.login(username, password)
     }
 
     @PostMapping("/register")
     fun register(@RequestBody userRegisterRequestDto: UserRegisterRequestDto): UserRegisterResponseDto {
         try {
-            val userName = userRegisterRequestDto.userName
-            val passWord = userRegisterRequestDto.passWord
-            return userService.register(userName, passWord)
+            val username = userRegisterRequestDto.username
+            val password = userRegisterRequestDto.password
+            return userService.register(username, password)
         } catch (e: Exception) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "aa")
         }

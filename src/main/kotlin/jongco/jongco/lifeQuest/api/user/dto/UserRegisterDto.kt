@@ -1,8 +1,8 @@
 package jongco.jongco.lifeQuest.api.user.dto
 
 class UserRegisterRequestDto (
-    val userName: String,
-    val passWord: String
+    val username: String,
+    val password: String
 )
 
 class UserRegisterResponseDto (
