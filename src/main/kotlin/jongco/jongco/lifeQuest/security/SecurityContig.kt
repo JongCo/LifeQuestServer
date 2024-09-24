@@ -16,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +29,10 @@ class SecurityConfig (
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
-            httpBasic { disable() }
+            cors {
+                configurationSource = corsConfigurationSource()
+            }
+            httpBasic { corsConfigurationSource() }
             csrf { disable() } // TODO : 이게 뭔지 정확히 알아보기
             sessionManagement {
                 sessionCreationPolicy = SessionCreationPolicy.STATELESS
@@ -47,5 +53,16 @@ class SecurityConfig (
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder {
         return BCryptPasswordEncoder()
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("http://localhost:8080", "http://localhost:5173")
+        configuration.allowedMethods = listOf("POST", "GET", "DELETE", "PUT")
+        configuration.allowedHeaders = listOf("*")
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 }
