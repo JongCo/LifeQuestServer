@@ -7,9 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import jongco.jongco.lifeQuest.api.user.UserEntity
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.PropertySource
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
@@ -19,22 +17,14 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.lang.RuntimeException
 import java.security.Key
-import java.util.Arrays
 import java.util.Date
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 import java.util.stream.Collectors
-import kotlin.reflect.typeOf
 
 @Component
 class JwtTokenProvider(@Value("\${jwt.secret}") secretKey: String) {
-    private final val keyBytes: ByteArray
-    private final val key: Key
-
-    init {
-        this.keyBytes = Decoders.BASE64.decode(secretKey)
-        this.key = Keys.hmacShaKeyFor(keyBytes)
-    }
+    private final val keyBytes: ByteArray = Decoders.BASE64.decode(secretKey)
+    private final val key: Key = Keys.hmacShaKeyFor(keyBytes)
 
     fun generateToken(authentication: Authentication): TokenInfo{
         val authorities: String = authentication.authorities.stream()
@@ -55,6 +45,8 @@ class JwtTokenProvider(@Value("\${jwt.secret}") secretKey: String) {
             .setExpiration(accessTokenExpiresIn)
             .signWith(key, SignatureAlgorithm.HS256)
             .compact()
+
+        print(accessToken)
 
         val refreshToken = Jwts.builder()
             .setExpiration(refreshTokenExpiresIn)

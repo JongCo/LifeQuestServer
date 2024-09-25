@@ -4,6 +4,7 @@ import jongco.jongco.lifeQuest.api.user.dto.UserLoginRequestDto
 import jongco.jongco.lifeQuest.api.user.dto.UserRegisterRequestDto
 import jongco.jongco.lifeQuest.api.user.dto.UserRegisterResponseDto
 import jongco.jongco.lifeQuest.security.jwt.TokenInfo
+import org.apache.tomcat.websocket.AuthenticationException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -23,10 +24,18 @@ class UserController (
 
     @PostMapping("/login")
     fun login(@RequestBody userLoginRequestDto: UserLoginRequestDto): TokenInfo {
-        val username = userLoginRequestDto.username
-        val password = userLoginRequestDto.password
+        try {
+            val username = userLoginRequestDto.username
+            val password = userLoginRequestDto.password
 
-        return userService.login(username, password)
+            return userService.login(username, password)
+        } catch (e: Exception) {
+            print(e.stackTrace)
+            for (trace: StackTraceElement in e.stackTrace){
+                println(trace)
+            }
+            throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "shit")
+        }
     }
 
     @PostMapping("/register")
