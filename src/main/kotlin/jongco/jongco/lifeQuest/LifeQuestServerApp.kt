@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class SpringPracticeApplication
+class LifeQuestServerApp
 
 fun main(args: Array<String>) {
-	runApplication<SpringPracticeApplication>(*args)
+	runApplication<LifeQuestServerApp>(*args)
 }
