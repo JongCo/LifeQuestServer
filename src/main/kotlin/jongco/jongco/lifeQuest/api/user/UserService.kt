@@ -28,8 +28,8 @@ class UserService (
 
     fun register(username: String, password: String): UserRegisterResponseDto {
             val createdUser = UserEntity(
-                userName = username,
-                passWord = BCryptPasswordEncoder().encode(password),
+                username = username,
+                password = BCryptPasswordEncoder().encode(password),
                 roles = List<String>(1){"USER"}
             )
             userRepository.save(createdUser)

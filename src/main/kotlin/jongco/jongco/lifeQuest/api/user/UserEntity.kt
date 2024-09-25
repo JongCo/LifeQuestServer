@@ -21,10 +21,10 @@ class UserEntity (
     val id: UUID = UUID.randomUUID(),
 
     @Column(length = 30, nullable = false, unique = true)
-    val userName: String,
+    private val username: String,
 
     @Column(nullable = false)
-    val passWord: String,
+    private val password: String,
 
     //idk
     @ElementCollection(fetch = FetchType.EAGER)
@@ -36,11 +36,11 @@ class UserEntity (
     }
 
     override fun getPassword(): String {
-        return passWord
+        return password
     }
 
     override fun getUsername(): String {
-        return userName
+        return username
     }
 
     fun getId(): String {

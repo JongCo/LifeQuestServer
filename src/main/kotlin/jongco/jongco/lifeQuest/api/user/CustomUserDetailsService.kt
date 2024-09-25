@@ -14,15 +14,15 @@ class CustomUserDetailsService(
     @Autowired val passwordEncoder: BCryptPasswordEncoder
 ): UserDetailsService {
     override fun loadUserByUsername(username: String): UserEntity {
-        return userRepository.findByUserName(username)
+        return userRepository.findByUsername(username)
     }
 
-    fun createUserDetails(user: UserEntity): UserDetails {
-        return User.builder()
-            .username(user.username)
-            .password(user.password)
-            .roles( *user.roles.toTypedArray() )
-            .build()
-    }
+//    fun createUserDetails(user: UserEntity): UserDetails {
+//        return User.builder()
+//            .username(user.username)
+//            .password(user.password)
+//            .roles( *user.roles.toTypedArray() )
+//            .build()
+//    }
 
 }

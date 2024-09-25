@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface UserRepository: JpaRepository<UserEntity, UUID> {
-    fun findByUserName(userName: String): UserEntity
+    fun findByUsername(username: String): UserEntity
 }
