@@ -1,5 +1,6 @@
 package jongco.jongco.lifeQuest.api.user
 
+import jongco.jongco.lifeQuest.api.user.dto.UserDto
 import jongco.jongco.lifeQuest.api.user.dto.UserRegisterResponseDto
 import jongco.jongco.lifeQuest.security.jwt.JwtTokenProvider
 import jongco.jongco.lifeQuest.security.jwt.TokenInfo
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class UserService (
@@ -34,5 +36,13 @@ class UserService (
             )
             userRepository.save(createdUser)
             return UserRegisterResponseDto("$username has been successfully created")
+    }
+
+    fun getUserInfo(uuid: UUID): UserDto {
+        val user = userRepository.findById(uuid)
+        return UserDto(
+            username = user.get().username,
+            userId = user.get().id.toString()
+        )
     }
 }
