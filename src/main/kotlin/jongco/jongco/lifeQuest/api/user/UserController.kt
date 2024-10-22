@@ -5,11 +5,8 @@ import jongco.jongco.lifeQuest.api.user.dto.UserLoginRequestDto
 import jongco.jongco.lifeQuest.api.user.dto.UserRegisterRequestDto
 import jongco.jongco.lifeQuest.api.user.dto.UserRegisterResponseDto
 import jongco.jongco.lifeQuest.security.jwt.TokenInfo
-import org.apache.tomcat.websocket.AuthenticationException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
-import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping

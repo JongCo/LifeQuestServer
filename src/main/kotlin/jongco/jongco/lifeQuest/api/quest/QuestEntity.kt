@@ -6,7 +6,6 @@ import jongco.jongco.lifeQuest.api.user.UserEntity
 import org.hibernate.annotations.UuidGenerator
 import org.springframework.data.jpa.repository.JpaRepository
 import java.time.Instant
-import java.util.Date
 import java.util.UUID
 
 @Entity(name = "quest")
