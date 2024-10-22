@@ -4,6 +4,7 @@ import jongco.jongco.lifeQuest.api.user.UserEntity
 import jongco.jongco.lifeQuest.api.user.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.UUID
@@ -20,13 +21,13 @@ class QuestService (
                 it.id.toString(),
                 it.title,
                 it.owner.id.toString(),
-                it.startDateTime?.let { start -> DateTimeFormatter.ISO_DATE_TIME.format(start.toInstant())},
-                it.endDateTime?.let { end -> DateTimeFormatter.ISO_DATE_TIME.format(end.toInstant())}
+                it.startDateTime.toString(),
+                it.endDateTime.toString(),
             )
         })
     }
 
-    fun createQuest(title: String, owner:UUID, startDateTime: Date?, endDateTime: Date?): QuestDto{
+    fun createQuest(title: String, owner:UUID, startDateTime: Instant?, endDateTime: Instant?): QuestDto{
         val createdQuest = QuestEntity(
             title=title,
             owner=userRepository.findById(owner).get(),

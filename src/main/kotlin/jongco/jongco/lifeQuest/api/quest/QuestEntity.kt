@@ -26,13 +26,13 @@ class QuestEntity (
     val stages: List<StageEntity> = ArrayList(),
 
     @Column
-    val createDateTime: Date = Date(System.currentTimeMillis()),
+    val createDateTime: Instant = Instant.now(),
 
     @Column(nullable = true)
-    var startDateTime: Date?,
+    var startDateTime: Instant?,
 
     @Column(nullable = true)
-    var endDateTime: Date?,
+    var endDateTime: Instant?,
 )
 
 interface QuestRepository: JpaRepository<QuestEntity, UUID> {

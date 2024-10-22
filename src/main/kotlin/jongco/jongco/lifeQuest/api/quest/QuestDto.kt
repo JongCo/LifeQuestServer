@@ -33,10 +33,10 @@ class CreateQuestRequestDto (
     endDateTime: String?
 ) {
     val owner: UUID = UUID.fromString(owner)
-    val startDateTime: Date? = if (startDateTime.isNullOrBlank()) null else {
-        Date.from(Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(startDateTime)))
+    val startDateTime: Instant? = if (startDateTime.isNullOrBlank()) null else {
+        Instant.parse(startDateTime)
     }
-    val endDateTime: Date? = if (endDateTime.isNullOrBlank()) null else {
-        Date.from(Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(endDateTime)))
+    val endDateTime: Instant? = if (endDateTime.isNullOrBlank()) null else {
+        Instant.parse(endDateTime)
     }
 }

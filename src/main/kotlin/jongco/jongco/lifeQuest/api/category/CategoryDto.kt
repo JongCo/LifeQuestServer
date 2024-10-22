@@ -6,6 +6,9 @@ class CategoryDto(
     val id: String,
     val owner: String,
     val title: String,
+    val createDateTime: String,
+    val modifiedDateTime: String,
+    val order: Int,
 )
 
 class CategoriesDto(
