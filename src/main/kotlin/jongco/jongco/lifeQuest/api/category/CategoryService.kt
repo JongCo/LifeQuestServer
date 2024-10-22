@@ -29,14 +29,14 @@ class CategoryService (
     }
 
     fun createCategory(title: String, owner: UUID): CategoryDto{
-        val topOrder = categoryRepository.findTopByOwnerIdOrderBySortOrderDesc(owner).sortOrder
+        val topOrder = categoryRepository.findTopByOwnerIdOrderBySortOrderDesc(owner)?.sortOrder
 
 
         val createdCategory = CategoryEntity(
             title = title,
             owner = userRepository.findById(owner).get(),
             modifiedDateTime = Instant.now(),
-            sortOrder = topOrder + 1
+            sortOrder = if(topOrder!=null) {topOrder + 1} else {1}
         )
 
         categoryRepository.save(createdCategory)

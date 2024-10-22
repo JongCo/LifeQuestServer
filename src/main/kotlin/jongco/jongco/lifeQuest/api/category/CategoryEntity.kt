@@ -34,5 +34,5 @@ class CategoryEntity (
 
 interface CategoryRepository: JpaRepository<CategoryEntity, UUID> {
     fun findAllByOwnerId(owner: UUID): List<CategoryEntity>
-    fun findTopByOwnerIdOrderBySortOrderDesc(owner: UUID): CategoryEntity
+    fun findTopByOwnerIdOrderBySortOrderDesc(owner: UUID): CategoryEntity?
 }

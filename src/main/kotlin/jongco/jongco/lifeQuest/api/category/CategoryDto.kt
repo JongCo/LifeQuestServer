@@ -8,7 +8,7 @@ class CategoryDto(
     val title: String,
     val createDateTime: String,
     val modifiedDateTime: String,
-    val order: Int,
+    val sortOrder: Int,
 )
 
 class CategoriesDto(
